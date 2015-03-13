@@ -8,4 +8,4 @@ Tools Used:
 Eclipse, XAMPP, Heidi SQL, Git
 
 Language:
-PHP, JavaScript, SQL. 
+PHP, JavaScript,JQuery, SQL. 
