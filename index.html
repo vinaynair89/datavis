@@ -1,0 +1,46 @@
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Visual</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<style> /* set the CSS */
+
+body { font: 12px Arial;}
+
+path { 
+	stroke: steelblue;
+	stroke-width: 2;
+	fill: none;
+}
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: grey;
+	stroke-width: 1;
+	shape-rendering: crispEdges;
+}
+
+div.tooltip {
+  position: absolute;	
+  text-align: center;	
+  width: 60px;	
+  height: 28px;		
+  padding: 2px;	
+  font: 12px sans-serif;	
+  background: lightsteelblue;	
+  border: 0px;					
+  border-radius: 8px;
+ /*  pointer-events: none;	This line needs to be removed */
+	
+}
+
+</style>
+<body>
+<?php  include 'index.php';?>
+
+</body>
+<script src="js/d3.js"></script>
+<script src="js/d3.min.js"></script>
+</html>
