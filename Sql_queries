@@ -1,0 +1,67 @@
+
+/*Total Cost of all orders in Year 2014.*/
+select CAST(SUBSTRING_INDEX(date, '/', -1) as unsigned) as YEAR,CAST(SUM(TotalCost) as decimal(53,2)) 
+from test group by YEAR
+
+
+/*Total Cost of all orders Per Quarter. List each quarter,total cost in that quarter.*/
+select CAST(SUBSTRING_INDEX(date, '/', -1) as UNSIGNED) as Year, 
+case CAST(SUBSTRING_INDEX(date, '/', -3) as UNSIGNED) 
+when 1 then 1 when 2 then 1 when 3 then 1 
+when 4 then 2 when 5 then 2 when 6 then 2
+when 7 then 3 when 8 then 3 when 9 then 3 
+when 10 then 4 when 11 then 4 when 12 then 4
+end as Quarter,CAST(SUM(TotalCost) as decimal(53,2)) from test group by Quarter
+
+/*Top 4 regions based on total quantity of products ordered in last 3 quarters of year 2014.*/
+select s1.Region,s1.Quarter,s1.Quantity from (
+select Region,CAST(SUBSTRING_INDEX(date, '/', -1) as UNSIGNED) as Year, 
+case CAST(SUBSTRING_INDEX(date, '/', -3) as UNSIGNED) 
+when 1 then 1 when 2 then 1 when 3 then 1 
+when 4 then 2 when 5 then 2 when 6 then 2
+when 7 then 3 when 8 then 3 when 9 then 3 
+when 10 then 4 when 11 then 4 when 12 then 4
+end as Quarter,SUM(Quantity) as Quantity 
+from test
+group by Region,Quarter,Year order by Quantity desc Limit 4
+) s1
+where s1.Quarter in (2,3,4)
+
+
+/*Single largest item ordered in each quarter based on Cost. Do not include numbers from Region Ohio Valley. Please provide item, quarter, total cost details.*/
+select s1.Quarter,MAX(s1.Cost) from (
+select Region,CAST(SUBSTRING_INDEX(date, '/', -1) as UNSIGNED) as Year, 
+case CAST(SUBSTRING_INDEX(date, '/', -3) as UNSIGNED) 
+when 1 then 1 when 2 then 1 when 3 then 1 
+when 4 then 2 when 5 then 2 when 6 then 2
+when 7 then 3 when 8 then 3 when 9 then 3 
+when 10 then 4 when 11 then 4 when 12 then 4
+end as Quarter,CAST(TotalCost as decimal(53,2))as Cost
+ from test  
+where region not in ('Ohio Valley')
+) s1
+group by s1.Quarter
+
+
+/*Single largest item ordered in each quarter based on Quantity.  Do not include numbers from South Central and New England. Please provide item, quarter, total cost details.*/
+select s1.QuoteID,s1.Quarter,MAX(s1.Quantity) from (
+select QuoteID,Quantity,Region,CAST(SUBSTRING_INDEX(date, '/', -1) as UNSIGNED) as Year, 
+case CAST(SUBSTRING_INDEX(date, '/', -3) as UNSIGNED) 
+when 1 then 1 when 2 then 1 when 3 then 1 
+when 4 then 2 when 5 then 2 when 6 then 2
+when 7 then 3 when 8 then 3 when 9 then 3 
+when 10 then 4 when 11 then 4 when 12 then 4
+end as Quarter,CAST(TotalCost as decimal(53,2))as Cost
+ from test  
+where region not in ('South Central','England')
+) s1
+group by s1.Quarter
+
+
+
+
+
+
+
+
+
